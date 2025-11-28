@@ -69,21 +69,6 @@ FocusPad/
 * Frontend: HTML, CSS, light JavaScript
 * No external UI frameworks
 
-## Development
-
-Format before committing:
-
-```bash
-black .
-prettier --write "templates/**/*.html"
-```
-
-Example commits:
-
-```bash
-git commit -m "feat: add note encryption"
-git commit -m "fix: handle empty title input"
-```
 
 ## Security
 
@@ -99,13 +84,6 @@ git commit -m "fix: handle empty title input"
 * No search or export yet
 * No multi-user collaboration
 * Local storage only
-
-## Contributing
-
-* Fork and branch per feature
-* Keep changes focused
-* Write clear commit messages
-* Open pull requests with context
 
 ## License
 
