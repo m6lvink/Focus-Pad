@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}FocusPad - Dashboard{% endblock %}
+
+{% block content %}
+<nav class="navbar">
+  <div class="container-fluid navbar-expand-lg">
+    <span class="navbar-brand">FocusPad</span>
+    <div>
+      <!-- Logout via POST to include CSRF -->
+      <form method="post" action="/logout" style="display:inline;">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button type="submit" class="btn btn-outline-light">Logout</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-5">
+  <h2>Create a New Note</h2>
+  <form method="POST" action="/dashboard">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+    <div class="mb-4">
+      <label class="form-label">Title</label>
+      <input type="text" name="title" class="form-control" placeholder="Enter note title" required>
+    </div>
+
+    <div class="mb-4">
+      <label class="form-label">Content</label>
+      <textarea name="content" class="form-control" rows="4" placeholder="Enter note content" required></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Note</button>
+  </form>
+
+  <div class="row mt-5">
+    {% for note in notes %}
+    <div class="card note-fade-in">
+      <h5 class="card-title">{{ note[1] }}</h5>
+      <p class="card-text">{{ note[2] }}</p>
+      <!-- Delete via POST with CSRF -->
+      <form method="post" action="/delete/{{ note[0] }}" style="display:inline;">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+      </form>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

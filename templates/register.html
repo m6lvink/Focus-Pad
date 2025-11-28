@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}FocusPad – Register{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+  <h1 class="text-center">Create Your Account</h1>
+
+  {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+  {% endif %}
+
+  <form method="POST" class="mt-4">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        
+    <div class="mb-4">
+      <label class="form-label">Username</label>
+      <input type="text" name="username" class="form-control form-control-lg" required>
+    </div>
+
+    <div class="mb-4">
+      <label class="form-label">Password</label>
+      <input type="password" name="password" class="form-control form-control-lg" required>
+    </div>
+
+    <button type="submit" class="btn btn-success btn-lg w-100">Register</button>
+  </form>
+
+  <div class="text-center mt-4">
+    <a href="/" class="btn btn-link">Back to Home</a>
+  </div>
+</div>
+{% endblock %}

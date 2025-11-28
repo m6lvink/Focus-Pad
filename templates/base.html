@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FocusPad - Simple note-taking app with minimalist design">
+  <meta name="author" content="Melvin Kaneshiro"> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  <!-- Informational only; real headers are set by Flask (the security in the headers)-->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  
+  <title>{% block title %}FocusPad{% endblock %}</title>
+
+  <!-- CSS via Flask to avoid path/cache issues -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  {% if 'user_id' not in session %}
+  <header class="header">
+    <div class="container d-flex justify-between align-center">
+      <a href="/" class="brand">
+        <span class="brand-name">FocusPad</span>
+      </a>
+      <nav class="nav">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/login" class="nav-link">Login</a>
+        <a href="/register" class="nav-link">Register</a>
+      </nav>
+    </div>
+  </header>
+  {% endif %}
+  
+  <main class="main container">
+    {% block content %}{% endblock %}
+  </main>
+  
+  {% if 'user_id' not in session %}
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 FocusPad</p>
+    </div>
+  </footer>
+  {% endif %}
+
+  <!-- Theme toggle button -->
+  <button id="themeToggle" aria-label="Toggle theme">
+    <span id="themeIcon">🌙</span>
+  </button>
+
+  <script nonce="{{ csp_nonce }}">
+    (function () {
+      var htmlEl = document.documentElement;
+      var themeIcon = document.getElementById('themeIcon');
+      
+      function setTheme(t) {
+        if (t === 'dark') {
+          htmlEl.classList.add('dark-theme');
+          if (themeIcon) themeIcon.textContent = '☀️'; 
+        } else {
+          htmlEl.classList.remove('dark-theme');
+          if (themeIcon) themeIcon.textContent = '🌙';
+        }
+        try { localStorage.setItem('theme', t); } catch (e) {}
+      }
+      
+      var toggleBtn = document.getElementById('themeToggle');
+      if (toggleBtn) {
+        toggleBtn.addEventListener('click', function () {
+          var current = htmlEl.classList.contains('dark-theme') ? 'light' : 'dark';
+          setTheme(current);
+        });
+      }
+      
+      var saved = 'light';
+      try { saved = localStorage.getItem('theme') || 'light'; } catch (e) {}
+      setTheme(saved);
+    })();
+  </script>
+</body>
+</html>
