@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  {% if 'user_id' not in session %}
+  {% if 'userId' not in session %}
   <header class="header">
     <div class="container d-flex justify-between align-center">
       <a href="/" class="brand">
@@ -37,7 +37,7 @@
     {% block content %}{% endblock %}
   </main>
   
-  {% if 'user_id' not in session %}
+  {% if 'userId' not in session %}
   <footer class="footer">
     <div class="container">
       <p>&copy; 2025 FocusPad</p>

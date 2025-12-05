@@ -125,19 +125,21 @@ def register():
             
         passwordHash = generate_password_hash(inputPassword)
         
+        connection = None
         try:
             connection = getDbConnection()
             with connection:
-                # Insert new user
                 connection.execute(
                     "INSERT INTO users (username, password) VALUES (?, ?)", 
                     (inputUsername, passwordHash)
                 )
-            connection.close()
             return redirect(url_for('login'))
             
         except sqlite3.IntegrityError:
             return render_template('register.html', error='Username already exists')
+        finally:
+            if connection is not None:
+                connection.close()
             
     return render_template('register.html')
 
