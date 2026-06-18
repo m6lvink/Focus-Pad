@@ -58,10 +58,10 @@ def initDatabase():
         """)
     connection.close()
 
+initDatabase()
+
 @app.before_request
 def beforeRequest():
-    # Setup DB and Nonce before every request
-    initDatabase()
     g.cspNonce = secrets.token_urlsafe(16)
 
 @app.context_processor
