@@ -14,6 +14,8 @@ import secrets
 
 # Init Flask app
 app = Flask(__name__)
+baseDirectory = os.path.dirname(os.path.abspath(__file__))
+databasePath = os.path.join(baseDirectory, 'notes.db')
 
 # Security config
 secretKey = os.environ.get('SECRET_KEY', 'placeholderSecret')
@@ -33,7 +35,7 @@ csrfProtection = CSRFProtect(app)
 
 def getDbConnection():
     # Function to return a new DB connection
-    dbConnection = sqlite3.connect('notes.db')
+    dbConnection = sqlite3.connect(databasePath)
     return dbConnection
 
 def initDatabase():
