@@ -34,6 +34,7 @@
     <button type="submit" class="btn btn-primary">Add Note</button>
   </form>
 
+  {% if notes %}
   <div class="row mt-5">
     {% for note in notes %}
     <div class="card note-fade-in">
@@ -47,5 +48,10 @@
     </div>
     {% endfor %}
   </div>
+  {% else %}
+  <div class="alert mt-5">
+    No notes yet. Add your first note above to get started.
+  </div>
+  {% endif %}
 </div>
 {% endblock %}
